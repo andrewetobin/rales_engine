@@ -1,7 +1,9 @@
 FactoryBot.define do
   factory :invoice do
-    status { "MyString" }
-    merchant { nil }
-    customer { nil }
+    merchant
+   customer
+   status "Shipped"
+   created_at "2018-10-03 20:07:34"
+   updated_at "2018-10-03 20:07:34"
   end
 end
