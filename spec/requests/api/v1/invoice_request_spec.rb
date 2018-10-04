@@ -14,7 +14,7 @@ describe 'Invoices API' do
 
     expect(invoices.count).to eq(3)
   end
-  it "can get one item by its ID" do
+  it "can get one invoice by its ID" do
     customer = create(:customer)
     merchant = create(:merchant)
     id = create(:invoice, customer_id: customer.id, merchant_id: merchant.id).id
