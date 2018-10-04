@@ -12,7 +12,7 @@ describe 'Customers API' do
 
     expect(customers.count).to eq(3)
   end
-  it "can get one item by its ID" do
+  it "can get one customer by its ID" do
     id = create(:customer).id
 
     get "/api/v1/customers/#{id}"
