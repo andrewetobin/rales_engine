@@ -34,4 +34,4 @@ describe "merchant business logic" do
     expect(response_merchants.first["id"]).to eq(merchant_1.id)
     expect(response_merchants.first["name"]).to eq(merchant_1.name)
   end
-end 
+end

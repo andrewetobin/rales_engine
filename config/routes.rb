@@ -7,10 +7,6 @@ Rails.application.routes.draw do
         get '/most_revenue', to: 'merchant_revenue#index'
       end
 
-
-
-
-
       resources :merchants, only: [:index, :show]
     end
   end
