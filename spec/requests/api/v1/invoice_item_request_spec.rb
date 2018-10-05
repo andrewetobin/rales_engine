@@ -115,7 +115,7 @@ describe 'Invoice Item API' do
     expect(response).to be_successful
     expect(response_invoice_item["id"]).to eq(invoice_item_2.id)
   end
-  it 'can find all items by id' do
+  it 'can find all invoice items by id' do
     merchant_1 = create(:merchant)
     customer = create(:customer)
     item_1 = create(:item, merchant_id: merchant_1.id)
