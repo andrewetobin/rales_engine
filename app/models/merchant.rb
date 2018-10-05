@@ -34,8 +34,7 @@ class Merchant < ApplicationRecord
       .merge(Transaction.success)
       .where('invoices.created_at BETWEEN ? AND ?', start_date, end_date)
       .limit(1)
-      .take 
+      .take
   end
-
 
 end
