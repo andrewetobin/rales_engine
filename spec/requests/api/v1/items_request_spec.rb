@@ -173,4 +173,15 @@ describe 'Items API' do
     expect(response).to be_successful
     expect(response_items.count).to eq(2)
   end
+  it 'can find a random item' do
+    merchant = create(:merchant)
+    create_list(:item, 4, merchant_id: merchant.id)
+
+    get "/api/v1/items/random"
+
+    item = JSON.parse(response.body)
+
+    expect(response).to be_successful
+    expect(item.count).to eq(1)
+  end
 end
