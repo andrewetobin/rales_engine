@@ -53,7 +53,7 @@ Rails.application.routes.draw do
         get '/find', to: 'transaction_search#show'
         get '/find_all', to: 'transaction_search#index'
         get '/random', to: 'transaction_random#show'
-
+        get '/:id/invoice', to: 'invoice#show'
       end
 
 
