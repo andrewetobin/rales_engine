@@ -70,7 +70,7 @@ describe 'Invoice Item API' do
     expect(response).to be_successful
     expect(response_invoice_item["id"]).to eq(invoice_item_2.id)
   end
-  it 'can find item by unit_price' do
+  it 'can find invoice_item by unit_price' do
     unit_price = 1400
     merchant_1 = create(:merchant)
     customer = create(:customer)
@@ -100,7 +100,7 @@ describe 'Invoice Item API' do
     expect(response).to be_successful
     expect(response_invoice_item["id"]).to eq(invoice_item_2.id)
   end
-  it 'can find item by updated at' do
+  it 'can find invoice_item by updated at' do
     updated_at = '2018-06-26 16:32:13 UTC'
     merchant_1 = create(:merchant)
     customer = create(:customer)
@@ -132,7 +132,7 @@ describe 'Invoice Item API' do
     expect(response).to be_successful
     expect(invoice_item["id"]).to eq(invoice_item_2.id)
   end
-  it 'can find all items by quantity' do
+  it 'can find all invoice_items by quantity' do
     quantity = 100
     merchant_1 = create(:merchant)
     customer = create(:customer)
@@ -151,7 +151,7 @@ describe 'Invoice Item API' do
     expect(response).to be_successful
     expect(invoice_item["id"]).to eq(invoice_item_2.id)
   end
-  it 'can find all items by unit_price' do
+  it 'can find all invoice_items by unit_price' do
     unit_price = 1400
     merchant_1 = create(:merchant)
     customer = create(:customer)
@@ -167,7 +167,7 @@ describe 'Invoice Item API' do
     expect(response).to be_successful
     expect(response_invoice_items.count).to eq(2)
   end
-  it 'can find all items by created_at' do
+  it 'can find all invoice_items by created_at' do
     created_at = '2018-06-26 16:32:13 UTC'
     merchant_1 = create(:merchant)
     customer = create(:customer)
@@ -183,7 +183,7 @@ describe 'Invoice Item API' do
     expect(response).to be_successful
     expect(response_invoice_items.count).to eq(2)
   end
-  it 'can find all items by updated_at' do
+  it 'can find all invoice_items by updated_at' do
     updated_at = '2018-06-26 16:32:13 UTC'
     merchant_1 = create(:merchant)
     customer = create(:customer)
@@ -212,5 +212,35 @@ describe 'Invoice Item API' do
 
     expect(response).to be_successful
     expect(invoice_items.count).to eq(1)
+  end
+  it 'can get invoice_item invoice' do
+    merchant = create(:merchant)
+    customer = create(:customer)
+    item = create(:item, merchant_id: merchant.id)
+    id = create(:invoice, merchant_id: merchant.id, customer_id: customer.id).id
+    invoice_item = create(:invoice_item, item_id: item.id, invoice_id: id)
+
+    get "/api/v1/invoice_items/#{invoice_item.id}/invoice"
+
+    expect(response).to be_successful
+
+    invoice = JSON.parse(response.body)
+
+    expect(invoice["id"]).to eq(id)
+  end
+  it 'can get invoice_item item' do
+    merchant = create(:merchant)
+    customer = create(:customer)
+    id = create(:item, merchant_id: merchant.id).id
+    invoice = create(:invoice, merchant_id: merchant.id, customer_id: customer.id)
+    invoice_item = create(:invoice_item, item_id: id, invoice_id: invoice.id)
+
+    get "/api/v1/invoice_items/#{invoice_item.id}/item"
+
+    expect(response).to be_successful
+
+    item = JSON.parse(response.body)
+
+    expect(item["id"]).to eq(id)
   end
 end
