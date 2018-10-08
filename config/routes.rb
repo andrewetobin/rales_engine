@@ -21,7 +21,7 @@ Rails.application.routes.draw do
         get '/random', to: 'customer_random#show'
         get '/:id/invoices', to: 'invoices#show'
         get '/:id/transactions', to: 'transactions#show'
-
+        get ':customer_id/favorite_merchant', to: 'favorite_merchant#show'
 
       end
       namespace :invoices do

@@ -33,16 +33,16 @@ class Merchant < ApplicationRecord
       .joins(invoices: [:transactions, :invoice_items])
       .merge(Transaction.success)
       .where('invoices.created_at BETWEEN ? AND ?', start_date, end_date)
-      .limit(1)
-      .take
+      .order('total_revenue DESC')
+      .first
   end
 
   def revenue
     invoices.select('SUM(invoice_items.quantity * invoice_items.unit_price) as total_revenue')
       .joins(:transactions, :invoice_items)
       .merge(Transaction.success)
-      .limit(1)
-      .take
+      .order('total_revenue DESC')
+      .first
   end
 
   def revenue_by_date(date)
@@ -61,8 +61,7 @@ class Merchant < ApplicationRecord
     customers.select('customers.*, COUNT(customers.id) AS customer_count')
       .group(:id)
       .order('customer_count DESC')
-      .limit(1)
-      .take
+      .first
   end
 
 end
