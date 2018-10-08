@@ -13,6 +13,7 @@ Rails.application.routes.draw do
         get '/:id/items', to: 'items#show'
         get '/:id/invoices', to: 'invoices#show'
         get '/:id/revenue', to: 'single_merchant_revenue#show'
+        get '/:merchant_id/favorite_customer', to: 'favorite_customer#show'
       end
       namespace :customers do
         get '/find', to: 'customer_search#show'
