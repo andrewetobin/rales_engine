@@ -37,4 +37,12 @@ class Merchant < ApplicationRecord
       .take
   end
 
+  def revenue
+    invoices.select('SUM(invoice_items.quantity * invoice_items.unit_price) as total_revenue')
+      .joins(:transactions, :invoice_items)
+      .merge(Transaction.success)
+      .limit(1)
+      .take
+  end
+
 end

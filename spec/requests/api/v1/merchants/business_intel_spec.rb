@@ -95,4 +95,18 @@ describe "merchant business logic" do
     expect(response).to be_successful
     expect(response_total["total_revenue"]).to eq("900.00")
   end
+  it 'can get merchant revenue for day' do
+    merchant = create(:merchant)
+    item = create(:item, merchant_id: merchant.id)
+    customer = create(:customer)
+    invoice = create(:invoice, customer_id: customer.id, merchant_id: merchant.id)
+    create_list(:invoice_item, 5, item_id: item.id, invoice_id: invoice.id)
+    create(:transaction, invoice_id: invoice.id)
+
+    get "/api/v1/merchants/#{merchant.id}/revenue"
+
+    response_total = JSON.parse(response.body)
+    expect(response).to be_successful
+    expect(response_total["revenue"]).to eq("500.00")
+  end
 end
