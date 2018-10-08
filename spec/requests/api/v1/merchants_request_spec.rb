@@ -117,4 +117,32 @@ describe 'Merchants API' do
     expect(response).to be_successful
     expect(merchant.count).to eq(1)
   end
+  it 'can get merchant items' do
+    merchant = create(:merchant)
+
+    create_list(:item, 3, merchant_id: merchant.id)
+
+    get "/api/v1/merchants/#{merchant.id}/items"
+
+    items = JSON.parse(response.body)
+    first_item = items.first
+
+    expect(response).to be_successful
+    expect(items.count).to eq(3)
+    expect(first_item['merchant_id']).to eq(merchant.id)
+  end
+  it 'can get merchant invoices' do
+    merchant = create(:merchant)
+
+    create_list(:invoice, 3, merchant_id: merchant.id)
+
+    get "/api/v1/merchants/#{merchant.id}/invoices"
+
+    invoices = JSON.parse(response.body)
+    first_invoice = invoices.first
+
+    expect(response).to be_successful
+    expect(invoices.count).to eq(3)
+    expect(first_invoice['merchant_id']).to eq(merchant.id)
+  end
 end

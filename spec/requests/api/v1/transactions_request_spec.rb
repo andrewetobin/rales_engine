@@ -255,5 +255,20 @@ describe 'Transaction Item API' do
     expect(response).to be_successful
     expect(transactions.count).to eq(1)
   end
+  it 'can get trancaction invoice' do
+      customer = create(:customer)
+      merchant = create(:merchant, id: 1)
+      invoice = create(:invoice, id: 1, customer_id: customer.id, merchant_id: merchant.id)
+      transaction = create(:transaction, invoice_id: invoice.id)
+
+      get "/api/v1/transactions/#{transaction.id}/invoice"
+
+      expect(response).to be_successful
+
+      transactions = JSON.parse(response.body)
+
+      expect(response).to be_successful
+      expect(transactions["id"]).to eq(1)
+    end
 
 end
